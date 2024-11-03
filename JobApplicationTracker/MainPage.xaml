@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:JobApplicationTracker.ViewModel"
+             xmlns:viewModels="clr-namespace:JobApplicationTracker;assembly=JobApplicationTracker"
+             x:Class="JobApplicationTracker.MainPage"
+             x:DataType="local:MainViewModel">
+
+    <FlexLayout Direction="Column">
+        <VerticalStackLayout Padding="10" FlexLayout.Basis="400" BackgroundColor="Beige">
+            <Picker Title="Select an Applicant" ItemsSource="{Binding Applicants}" ItemDisplayBinding="{Binding EmailAddress}"
+                    SelectedItem="Applicant" SelectedIndexChanged="Picker_SelectedIndexChanged" />
+            <Entry x:Name="ApplicantFirstName" Placeholder="First Name" Text="{Binding Applicant.FirstName, Mode=TwoWay}" />
+            <Entry x:Name="ApplicantMiddleName" Placeholder="Middle Name" Text="{Binding Applicant.MiddleName, Mode=TwoWay}" />
+            <Entry x:Name="ApplicantLastName" Placeholder="Last Name" Text="{Binding Applicant.LastName, Mode=TwoWay}" />
+            <Entry x:Name="ApplicantEmailAddress" Placeholder="Email Address" Text="{Binding Applicant.EmailAddress, Mode=TwoWay}" />
+            <Entry x:Name="ApplicantLinkedInUri" Placeholder="LinkedInUri" Text="{Binding Applicant.LinkedInUri, Mode=TwoWay}" />
+            <Button x:Name="SaveButton" Text="Save" Clicked="SaveButton_Clicked" />
+        </VerticalStackLayout>
+        <ListView x:Name="JobApplicationList" ItemsSource="{Binding Applicant.JobApplications}" FlexLayout.Grow="1" HasUnevenRows="True"
+                  ItemTapped="JobApplicationList_ItemTapped">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:JobApplication">
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Entry Grid.Column="0" Text="{Binding StatusId}" />
+                            <Entry Grid.Column="1" Text="{Binding Employer.DisplayText}" />
+                            <Entry Grid.Column="2" Text="{Binding JobIdentifier}" />
+                            <Entry Grid.Column="3" Text="{Binding Source.DisplayText}" />
+                            <Entry Grid.Column="4" Text="{Binding Recruiter.Name}" />
+                            <Entry Grid.Column="5" Text="{Binding Recruiter.Agency}" />
+                            <Entry Grid.Column="6" Text="{Binding ResumePath}" />
+                            <Entry Grid.Column="7" Text="{Binding Notes}" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </FlexLayout>
+</ContentPage>
